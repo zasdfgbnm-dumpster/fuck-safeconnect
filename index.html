@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Fuck SafeConnect</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <p>
+        <a href="https://github.com/zasdfgbnm/fuck-safeconnect/blob/master/README.md">常见问题看这里</a>
+    </p>
+    <p>请保持本页面开启</p>
+    <p>不断刷新中，刷新次数：
+        <div id="refresh_count"></div>
+    </p>
+    <script>
+        function rand(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+
+        function update_count_display() {
+            $("#refresh_count")[0].innerHTML = window.refresh_count;
+        }
+
+        function make_request(url, success) {
+            $.ajax({
+                url: url,
+                success: success
+            });
+        }
+
+        function do_fresh() {
+            url = window.http_sites[rand(window.http_sites.length)];
+            make_request(url, function (result) {
+                window.refresh_count++;
+                update_count_display();
+            });
+            window.setTimeout(do_fresh, 10000);
+        }
+
+        window.http_sites = [
+            "http://www.ufl.edu/",
+            "http://www.baidu.com/",
+            "http://www.cnn.com/",
+            "http://webbook.nist.gov/chemistry/",
+            "http://pubs.acs.org/"
+        ];
+        window.refresh_count = 0;
+        do_fresh();
+    </script>
+</body>
+
+</html>
